@@ -9,8 +9,8 @@ ada main, develop, supporting(feature, hotfix)
 
 + main
 + develop-main
-+ develop/thoriq/pemain
-+ develop/nama/folder yg dibenerin
++ develop/pemain
++ develop/folder yg dikembangin
 + feature/thoriq/pemain
 + feature/nama/folder atau package atau fitur baru atau eksperimen atau bug
 
