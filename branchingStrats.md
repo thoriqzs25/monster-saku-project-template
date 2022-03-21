@@ -8,16 +8,16 @@ ada main, develop, supporting(feature, hotfix)
 **feature sm hotfix** -> untuk benerin punya temen kalo dirasa ada yg kurang compitable sm code kita sendiri bisa juga buat benerin bug di branch develop sendiri atau yg lain.
 
 + main
-+ develop-main
-+ develop/nama
-+ develop/nama developer
-+ feature/thoriq/pemain
-+ feature/nama/folder atau package atau fitur baru atau eksperimen atau bug
++ dev-main
++ develop-thoriq
++ develop-nama developer
++ feature-thoriq-pemain
++ feature-nama-folder atau package atau fitur baru atau eksperimen atau bug
 
 # COMMITING
 jelasin aja apa yang berubah dan kl ada catetan penting ditambahin
 
 # CONTOH
 branch sama commit: 
-#### BRANCH : feature/thoriq/pemain
+#### BRANCH : feature-thoriq-pemain
 #### COMMIT : "pemain tadinya gabisa run, sekarang udah bisa - kadang bug kalo pake skill 3"
