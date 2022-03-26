@@ -35,6 +35,16 @@ public class Monster {
     }
 
     public Monster(int id, String name, List<ElementType> elementTypes, Stats baseStats, Stats currentStats,
+            String statusCondition) {
+        this.id = id;
+        this.name = name;
+        this.elementTypes = elementTypes;
+        this.baseStats = baseStats;
+        this.currentStats = currentStats;
+        this.statusCondition = statusCondition;
+    }
+
+    public Monster(int id, String name, List<ElementType> elementTypes, Stats baseStats, Stats currentStats,
             List<Move> moves, String statusCondition) {
         this.id = id;
         this.name = name;

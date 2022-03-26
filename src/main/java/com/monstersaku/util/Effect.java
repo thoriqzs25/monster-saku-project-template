@@ -18,14 +18,19 @@ public class Effect {
         }
     }
 
-    public Effect(String statusCondition, int[] statsPoint) {
-        this.statusCondition = statusCondition;
-        this.statsPoint = statsPoint;
-    }
-
     public Effect(int attack) {
         statusCondition = "-";
         statsPoint[1] = attack;
+    }
+
+    public Effect(int[] statsPoint) {
+        statusCondition = "-";
+        this.statsPoint = statsPoint;
+    }
+
+    public Effect(String statusCondition, int[] statsPoint) {
+        this.statusCondition = statusCondition;
+        this.statsPoint = statsPoint;
     }
 
     // All Getter Method
@@ -41,7 +46,7 @@ public class Effect {
         return statsPoint[2];
     }
 
-    public int getSpecialATtack() {
+    public int getSpecialAttack() {
         return statsPoint[3];
     }
 

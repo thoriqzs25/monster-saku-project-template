@@ -34,7 +34,7 @@ public class Stats {
         return defense;
     }
 
-    public double getSpecialATtack() {
+    public double getSpecialAttack() {
         return specialAttack;
     }
 
@@ -49,6 +49,16 @@ public class Stats {
     // All Setter Method
     public void setHealthPoint(double healthPoint) {
         this.healthPoint = healthPoint;
+    }
+
+    public void setWithOutHealthPoint(double attack, double defense, double specialAttack,
+            double specialDefense,
+            double speed) {
+        this.attack = attack;
+        this.defense = defense;
+        this.specialAttack = specialAttack;
+        this.specialDefense = specialDefense;
+        this.speed = speed;
     }
 
     public void printDetailStats() {

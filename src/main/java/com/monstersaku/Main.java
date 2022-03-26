@@ -7,6 +7,8 @@ import com.monstersaku.Monsters.*;
 import com.monstersaku.Status.Stats;
 
 import com.monstersaku.util.CSVReader;
+import com.monstersaku.util.Effect;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,12 +33,31 @@ public class Main {
         Stats baseStatsM = new Stats(100, 100, 100, 100, 100, 100);
         Stats currentStatsM = new Stats(100, 100, 100, 100, 100, 100);
         List<ElementType> elementTypesM = new ArrayList<ElementType>();
-        elementTypesM.add(ElementType.FIRE);
+        elementTypesM.add(ElementType.WATER);
         Monster mimic = new Monster(1, "Mimic", elementTypesM, baseStatsM, currentStatsM);
 
+        // Try Move Class
         DefaultMove df = new DefaultMove();
+
+        Effect effectNM = new Effect(120);
+        NormalMove nm = new NormalMove(1, "NORMAL", "Punch", ElementType.NORMAL, 90, 1, 10, "ENEMY", effectNM);
+
+        SpecialMove sm = new SpecialMove();
+        Effect effectSM = new Effect(120);
+        sm.setMove(2, "SPECIAL", "Special Punch", ElementType.NORMAL, 90, 1, 10, "ENEMY", effectSM);
+
+        int[] statsBuff = { 0, 0, -1, 0, -1, 0 };
+        Effect effectSTM = new Effect(statsBuff);
+        StatusMove stm = new StatusMove(5, "STATUS", "Taunting", ElementType.NORMAL, 90, 1, 10, "ENEMY", effectSTM);
+
+        System.out.println("##################");
+        System.out.println("TRY STATUS MOVE");
+        stm.applyMove(gw, mimic);
         mimic.getCurrentStats().printDetailStats();
-        df.applyMove(gw, mimic);
+        System.out.println("##################");
+        System.out.println("TRY SPECIAL MOVE");
+        mimic.getCurrentStats().printDetailStats();
+        sm.applyMove(gw, mimic);
         mimic.getCurrentStats().printDetailStats();
 
     }

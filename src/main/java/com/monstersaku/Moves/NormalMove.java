@@ -5,11 +5,15 @@ import com.monstersaku.util.Effect;
 import com.monstersaku.Monsters.Monster;
 import com.monstersaku.Status.Stats;
 
-public class DefaultMove extends Move {
+public class NormalMove extends Move {
 
-    public DefaultMove() {
-        Effect effect = new Effect(50);
-        setMove(0, "NORMAL", "DefaulMove", ElementType.NORMAL, 100, 0, 99, "ENEMY", effect);
+    public NormalMove() {
+
+    }
+
+    public NormalMove(int id, String moveType, String name, ElementType elementType, int accuracy, int priority,
+            int ammunition, String target, Effect effect) {
+        setMove(id, moveType, name, elementType, accuracy, priority, ammunition, target, effect);
     }
 
     public void applyMove(Monster self, Monster enemy) {
@@ -21,17 +25,9 @@ public class DefaultMove extends Move {
             currentStats.setHealthPoint(updateHP);
             enemy.setCurrentStats(currentStats);
 
-            // Self
-            Stats baseStatsSelf = self.getBaseStats();
-            Stats currentStatsSelf = self.getCurrentStats();
-            double updateHPSelf = baseStatsSelf.getHealthPoint() * 3 / 4;
-            currentStatsSelf.setHealthPoint(updateHPSelf);
-            self.setCurrentStats(currentStatsSelf);
-
         } else {
             System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getMoveName());
         }
 
     }
-
 }
