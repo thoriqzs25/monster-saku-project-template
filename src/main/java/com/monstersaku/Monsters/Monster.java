@@ -5,7 +5,7 @@ import com.monstersaku.Moves.Move;
 import com.monstersaku.util.ElementType;
 import com.monstersaku.util.Effect;
 
-import com.monstersaku.util.CSVReader; 
+import com.monstersaku.util.CSVReader;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Monster {
-    private int id;
+    private int ID;
     private String name;
     private List<ElementType> elementTypes;
     private Stats baseStats;
