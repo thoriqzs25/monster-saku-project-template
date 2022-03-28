@@ -54,9 +54,9 @@ public class StatusMove extends Move {
 
         if (getAmmunition() > 0) {
             String target = getTarget();
-            if (target == "OWN") {
+            if (target.equals("OWN")) {
                 buffSelf(self);
-            } else if (target == "ENEMY") {
+            } else if (target.equals("ENEMY")) {
                 debuffEnemy(enemy);
             }
         } else {
