@@ -26,7 +26,7 @@ public class NormalMove extends Move {
             enemy.setCurrentStats(currentStats);
 
         } else {
-            System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getMoveName());
+            System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());
         }
 
     }

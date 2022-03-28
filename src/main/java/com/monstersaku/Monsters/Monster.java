@@ -72,8 +72,16 @@ public class Monster {
         return statusCondition;
     }
 
+    public List<Move> getMoves() {
+        return moves;
+    }
+
     // All Setter Method
     public void setCurrentStats(Stats currentStats) {
         this.currentStats = currentStats;
+    }
+
+    public void setMoves(List<Move> moves) {
+        this.moves = moves;
     }
 }

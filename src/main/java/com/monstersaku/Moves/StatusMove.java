@@ -60,7 +60,7 @@ public class StatusMove extends Move {
                 debuffEnemy(enemy);
             }
         } else {
-            System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getMoveName());
+            System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());
         }
     }
 }

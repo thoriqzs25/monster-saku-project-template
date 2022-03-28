@@ -29,7 +29,7 @@ public class DefaultMove extends Move {
             self.setCurrentStats(currentStatsSelf);
 
         } else {
-            System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getMoveName());
+            System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());
         }
 
     }

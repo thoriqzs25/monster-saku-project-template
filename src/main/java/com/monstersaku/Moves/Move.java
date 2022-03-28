@@ -39,6 +39,17 @@ public abstract class Move {
         this.effect = effect;
     }
 
+    public void copyMove(Move move) {
+        setId(move.getId());
+        setMoveType(move.getMoveType());
+        setName(move.getName());
+        setElementType(move.getElementType());
+        setAccuracy(move.getAccuracy());
+        setAmmunition(move.getAmmunition());
+        setTarget(move.getTarget());
+        setEffect(move.getEffect());
+    }
+
     // Setter Attribute
     public void setId(int id) {
         this.id = id;
@@ -48,7 +59,7 @@ public abstract class Move {
         this.moveType = moveType;
     }
 
-    public void setMoveName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -72,6 +83,10 @@ public abstract class Move {
         this.target = target;
     }
 
+    public void setEffect(Effect effect) {
+        this.effect = effect;
+    }
+
     /* Getter Attribute */
     public int getId() {
         return id;
@@ -81,7 +96,7 @@ public abstract class Move {
         return moveType;
     }
 
-    public String getMoveName() {
+    public String getName() {
         return name;
     }
 
@@ -110,14 +125,16 @@ public abstract class Move {
     }
 
     public void printDetailMove() {
+        System.out.println("id: " + id);
         System.out.println("moveType: " + getMoveType());
-        System.out.println("name: " + getMoveName());
+        System.out.println("name: " + getName());
         System.out.println("elementType: " + elementType.toString());
         System.out.println("accuracy: " + String.valueOf(accuracy));
         System.out.println("priority: " + String.valueOf(priority));
         System.out.println("ammunition: " + String.valueOf(ammunition));
         System.out.println("target: " + target);
         effect.printDetailEffect();
+        System.out.println("###########");
     }
 
     public double damageCalculation(Monster self, Monster enemy) {
