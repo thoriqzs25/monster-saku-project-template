@@ -1,5 +1,8 @@
+package com.monstersaku.Player;
 import java.util.ArrayList;
 import java.util.List;
+import com.monstersaku.Monsters.Monster;
+
 public class Player{
     private String name;
     private List<Monster> listOfMonster = new ArrayList<Monster>();
@@ -20,7 +23,7 @@ public class Player{
     }
     public void countMonster(List<Monster> listOfMonster){
         for(Monster monster:listOfMonster){
-            if (monster.getBS().getHealthPoint() != 0) {
+            if (monster.getCurrentStats().getHealthPoint() != 0) {
                 numOfMonster += 1;
             } else {
                 numOfMonster += 0;
