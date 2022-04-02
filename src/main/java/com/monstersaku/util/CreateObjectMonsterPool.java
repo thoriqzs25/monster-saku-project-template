@@ -61,7 +61,7 @@ public class CreateObjectMonsterPool {
                 for (idx=0;idx<count;idx++){
                     moves[idx] = Integer.valueOf(movstr[idx]);
                 }
-                //ubah array list
+                //SET UP MOVE MILIK MONSTER
                 List<Move> movePool = new ArrayList<Move>();
                 movePool = CreateObjectMovePool.create();
                 AddListMove.add(monsread, moves, movePool);
