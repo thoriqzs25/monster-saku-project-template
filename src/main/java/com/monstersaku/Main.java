@@ -24,33 +24,34 @@ public class Main {
 
         List<Move> movePool = new ArrayList<Move>();
         movePool = CreateObjectMovePool.create();
-        int[] tes = { 2, 5 };
+        RandomGen.random(6);
 
-        Stats baseStats = new Stats(100, 100, 100, 100, 100, 100);
-        Stats currentStats = new Stats(100, 100, 100, 100, 100, 100);
-        List<ElementType> elementTypes = new ArrayList<ElementType>();
-        elementTypes.add(ElementType.FIRE);
-        Monster gw = new Monster(1, "Aufa", elementTypes, baseStats, currentStats);
-        AddListMove.add(gw, tes, movePool);
-        // for (Move move : gw.getMoves()) {
+        // Stats baseStats = new Stats(100, 100, 100, 100, 100, 100);
+        // Stats currentStats = new Stats(100, 100, 100, 100, 100, 100);
+        // List<ElementType> elementTypes = new ArrayList<ElementType>();
+        // elementTypes.add(ElementType.FIRE);
+        // Monster gw = new Monster(1, "Aufa", elementTypes, baseStats, currentStats);
+        // AddListMove.add(gw, tes, movePool);
+        // // for (Move move : gw.getMoves()) {
+        // // move.printDetailMove();
+        // // }
+
+        // Stats baseStatsI = new Stats(100, 100, 100, 100, 100, 100);
+        // Stats currentStatsI = new Stats(100, 100, 100, 100, 100, 100);
+        // List<ElementType> elementTypesI = new ArrayList<ElementType>();
+        // elementTypes.add(ElementType.WATER);
+        // Monster ima = new Monster(2, "Ima", elementTypesI, baseStatsI,
+        // currentStatsI);
+        // int[] movesIma = { 1, 4 };
+        // AddListMove.add(ima, movesIma, movePool);
+        // for (Move move : ima.getMoves()) {
         // move.printDetailMove();
         // }
-
-        Stats baseStatsI = new Stats(100, 100, 100, 100, 100, 100);
-        Stats currentStatsI = new Stats(100, 100, 100, 100, 100, 100);
-        List<ElementType> elementTypesI = new ArrayList<ElementType>();
-        elementTypes.add(ElementType.WATER);
-        Monster ima = new Monster(2, "Ima", elementTypesI, baseStatsI, currentStatsI);
-        int[] movesIma = { 1, 4 };
-        AddListMove.add(ima, movesIma, movePool);
-        for (Move move : ima.getMoves()) {
-            move.printDetailMove();
-        }
-        System.out.println("STAT IMA SBLM");
-        ima.getCurrentStats().printDetailStats();
-        gw.getMoves().get(1).applyMove(gw, ima);
-        System.out.println("STAT IMA SESUDAH");
-        ima.getCurrentStats().printDetailStats();
+        // System.out.println("STAT IMA SBLM");
+        // ima.getCurrentStats().printDetailStats();
+        // gw.getMoves().get(1).applyMove(gw, ima);
+        // System.out.println("STAT IMA SESUDAH");
+        // ima.getCurrentStats().printDetailStats();
 
         // Stats baseStatsM = new Stats(100, 100, 100, 100, 100, 100);
         // Stats currentStatsM = new Stats(100, 100, 100, 100, 100, 100);
