@@ -56,9 +56,10 @@ public class Monster {
     }
 
     // All Getter Method
-    public String getName(){
+    public String getName() {
         return this.name;
     }
+
     public Stats getBaseStats() {
         return baseStats;
     }
@@ -87,17 +88,19 @@ public class Monster {
     public void setMoves(List<Move> moves) {
         this.moves = moves;
     }
-    public void outputMonster(){
+
+    public void outputMonster() {
         System.out.println("----- IDENTITAS MONSTER -----");
         System.out.printf("ID Monster   : %d \n", this.id);
         System.out.printf("Nama Monster : %s \n", this.name);
         System.out.printf("Element Types: ");
         System.out.println(Arrays.toString(elementTypes.toArray()));
     }
-    public boolean isMonsterAlive(){
-        if (currentStats.getHealthPoint() != 0){
+
+    public boolean isMonsterAlive() {
+        if (currentStats.getHealthPoint() != 0) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }
