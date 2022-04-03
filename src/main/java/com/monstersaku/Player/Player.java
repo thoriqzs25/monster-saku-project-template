@@ -21,7 +21,7 @@ public class Player{
     public void addMonster(Monster monster){
         listOfMonster.add(monster);
     }
-    public void countMonster(List<Monster> listOfMonster){
+    public int countMonster(){
         for(Monster monster:listOfMonster){
             if (monster.getCurrentStats().getHealthPoint() != 0) {
                 numOfMonster += 1;
@@ -30,8 +30,24 @@ public class Player{
             }
            
         }
+        return numOfMonster;
     }
     public int outputCount(){
         return this.numOfMonster;
+    }
+    public void setMonsterList(Monster monster){
+        listOfMonster.add(monster);
+    }
+    public void printMyMonster(){
+        System.out.println("Jumlah monster: " + countMonster());
+        System.out.println("Berikut adalah monster yang kamu miliki: ");
+        for (Monster monster:listOfMonster){
+            if (monster.isMonsterAlive() == true){
+                monster.outputMonster();
+                System.out.println("----- Current Stats Monster " + monster.getName() + " -----");
+                monster.getCurrentStats().printDetailStats();
+                System.out.println("");
+            }
+        }
     }
 }
