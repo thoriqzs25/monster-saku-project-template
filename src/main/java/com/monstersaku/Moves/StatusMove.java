@@ -59,6 +59,7 @@ public class StatusMove extends Move {
             } else if (target.equals("ENEMY")) {
                 debuffEnemy(enemy);
             }
+            setAmmunition(getAmmunition() - 1);
         } else {
             System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());
         }

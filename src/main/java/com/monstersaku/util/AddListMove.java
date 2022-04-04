@@ -15,8 +15,9 @@ import java.util.ArrayList;
 public class AddListMove {
     public static void add(Monster monster, int[] moves, List<Move> movePool) {
         List<Move> mimic = new ArrayList<Move>();
+        mimic.add(movePool.get(0));
         for (int i = 0; i < moves.length; i++) {
-            int index = moves[i] - 1;
+            int index = moves[i];
             Move move = movePool.get(index);
             if (move instanceof NormalMove) {
                 NormalMove nm = new NormalMove();

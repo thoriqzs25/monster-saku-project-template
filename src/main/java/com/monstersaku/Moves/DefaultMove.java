@@ -27,6 +27,7 @@ public class DefaultMove extends Move {
             double updateHPSelf = baseStatsSelf.getHealthPoint() * 3 / 4;
             currentStatsSelf.setHealthPoint(updateHPSelf);
             self.setCurrentStats(currentStatsSelf);
+            setAmmunition(getAmmunition() - 1);
 
         } else {
             System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());

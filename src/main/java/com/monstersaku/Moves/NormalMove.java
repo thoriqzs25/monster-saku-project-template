@@ -24,6 +24,7 @@ public class NormalMove extends Move {
             double updateHP = currentStats.getHealthPoint() - damage;
             currentStats.setHealthPoint(updateHP);
             enemy.setCurrentStats(currentStats);
+            setAmmunition(getAmmunition() - 1);
 
         } else {
             System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());
