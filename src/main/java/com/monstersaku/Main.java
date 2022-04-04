@@ -59,13 +59,11 @@ public class Main {
          * elementTypes.add(ElementType.WATER);
          */
         // Masukkin mau berapa pemain yang ikut
-        System.out.printf("Masukkan jumlah pemain: ");
         Scanner inp = new Scanner(System.in);
-        int jmlp = inp.nextInt();
         System.out.println("");
         int i;
         List<Player> playerlist = new ArrayList<Player>();
-        for (i = 0; i < jmlp; i++) {
+        for (i = 0; i < 2; i++) {
             // pembuatan objek player
             System.out.printf("Masukkan nama Player%d: ", i + 1);
             String name = inp.next();
@@ -77,11 +75,12 @@ public class Main {
              */
             Player p = new Player(name, myMonsters);
             playerlist.add(p);
+            playerlist.get(i).printMyMonster();
         }
         // liat monster setiap pemain
-        for (int y = 0; y < jmlp; y++) {
+        /*for (int y = 0; y < 2; y++) {
             playerlist.get(y).printMyMonster();
-        }
+        }*/
 
         inp.close();
         /*

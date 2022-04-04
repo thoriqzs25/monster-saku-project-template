@@ -18,7 +18,7 @@ public class CreateObjectMovePool {
         List<Move> moves = new ArrayList<Move>();
 
         try {
-            System.out.printf("Filename: %s\n", fileName);
+            //System.out.printf("Filename: %s\n", fileName);
             CSVReader reader = new CSVReader(new File(Main.class.getResource(fileName).toURI()), ";");
             reader.setSkipHeader(true);
             List<String[]> lines = reader.read();
