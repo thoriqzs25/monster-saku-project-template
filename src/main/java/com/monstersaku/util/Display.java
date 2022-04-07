@@ -1,5 +1,8 @@
 package com.monstersaku.util;
 
+import com.monstersaku.Monsters.Monster;
+import com.monstersaku.Moves.Move;
+
 public class Display {
     public static void cls() {
         System.out.print("\033[H\033[2J");
@@ -35,5 +38,14 @@ public class Display {
         System.out.println("5. HELP");
         System.out.println("6. EXIT");
         System.out.printf("Input : ");
+    }
+
+    public static void showAvailableMove(Monster monster) {
+        System.out.println("----- Moves of " + monster.getName() + " -----");
+        for (Move move : monster.getMoves()) {
+            System.out.println("id move: " + move.getId());
+            System.out.println("move name: " + move.getName());
+            System.out.println(" ");
+        }
     }
 }

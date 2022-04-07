@@ -36,10 +36,11 @@ public class Game {
             // Identifying user input
             switch (cmd) {
                 case "1":
-                    System.out.println("Move");
+                    Display.showAvailableMove(currentPlayer.getCurrentMonster());
+                    currentPlayer.getCurrentMonster().play(scan);
                     break;
                 case "2":
-                    System.out.println("Switch!");
+                    System.out.println("Switch!!");
                     break;
                 case "3":
                     monsterInfo(currentPlayer);
