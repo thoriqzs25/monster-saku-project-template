@@ -40,7 +40,7 @@ public class Game {
                     currentPlayer.getCurrentMonster().play(scan);
                     break;
                 case "2":
-                    System.out.println("Switch!");
+                    System.out.println("Switch!!");
                     break;
                 case "3":
                     monsterInfo(currentPlayer);
