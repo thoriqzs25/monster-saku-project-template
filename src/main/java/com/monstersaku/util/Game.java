@@ -12,86 +12,59 @@ import com.monstersaku.Player.*;
 
 public class Game {
 
-    private List<Player> playerlist = new ArrayList<Player>();
+    private List<Player> playerList = new ArrayList<Player>();
     private int playerTurn;
     private String winner;
 
-    public Game(){
-        
-    }
+    public Game(List<Player> playerList, Scanner scan) {
+        // Set list of players for the current game
+        this.playerList = playerList;
 
-    public static void showMenuAwal(){
-        System.out.println("GAME MENU");
-        System.out.println("1. START");
-        System.out.println("2. HELP");
-        System.out.println("3. EXIT");
-    }
+        // Determine who goes first using shuffle collections
+        Collections.shuffle(playerList);
+        Player currentPlayer = playerList.get(0);
 
-    public static void showMenuDalamTurn(){
-        System.out.println("GAME MENU");
-        System.out.println("1. MOVE");
-        System.out.println("2. SWITCH");
-        System.out.println("3. View Monster Info");
-        System.out.println("4. View Game Info");
-        System.out.println("5. HELP");
-        System.out.println("6. EXIT");
-    }
+        // Let player choose what to do on his turn
+        String cmd = new String();
+        while (true) {
+            // Display current player's name
+            System.out.printf("--%s's TURN ---\n", currentPlayer.getName().toUpperCase());
+            Display.showMenuDalamTurn();
+            cmd = scan.next();
+            Display.cls(); // Clear screen
 
-    public void randomTurn(){
-        Collections.shuffle(playerlist);
-    }
-
-    public void start(){ // Masih bingung ngeimplement mekanisme turn nyaa
-        // Masing-masing player mendapatkan 6 monster secara acak
-        int i;
-        Scanner scan = new Scanner(System.in); // JANGAN LUPA DI CLOSE
-        for (i=0;i<2;i++){ // Cuma ada 2 player sesuai spesifikasi
-            //pembuatan objek player
-            System.out.printf("Masukkan nama Player%d: ", i+1);
-            String name = scan.next();
-            Player player = new Player(name);
-
-            //pembacaan monster pool
-            List<Monster> monsterpool = new ArrayList<Monster>();
-            monsterpool = CreateObjectMonsterPool.create();
-            
-            //randomize
-            AddListMonster.AddMonsters(player, monsterpool);
-            playerlist.add(player);
-
+            // Identifying user input
+            switch (cmd) {
+                case "1":
+                    System.out.println("Move");
+                    break;
+                case "2":
+                    System.out.println("Switch!");
+                    break;
+                case "3":
+                    monsterInfo(currentPlayer);
+                    break;
+                case "4":
+                    gameInfo();
+                    break;
+                case "5":
+                    Game.help();
+                    break;
+                case "6":
+                    Game.exit();
+                    break;
+                default:
+                    System.out.println("");
+                    break;
+            }
         }
-        // Masing-masing player  mendapatkan urutan bermain
-        randomTurn(); // Akan mendapatkan pemain giliran pertama
-        Player player_now = playerlist.get(0); // Pemain giliran awal
-
-        // Masing-masing player dipilihkan 1 monster secara acak di awal untuk bertarung
-        List<Monster> listMonster_playernow = player_now.getListOfMonsters();
-        Collections.shuffle(listMonster_playernow);
-        Monster monster_now = listMonster_playernow.get(0);
-
-        // Show Game Info
-
-        // SETIAP TURN
-        // Tampilkan Menu Dalam Turn --> Untuk melihat info dalam permainan
-        Game.showMenuDalamTurn();
-        System.out.println("Pilihan: " );
-        String pilihanmain = scan.next();
-
-        // Jika memilih menu selain 1 dan 2, eksekusi menu --> Tampilkan menu dalam turn lagi
-        if (pilihanmain.equals("3")){
-            this.MonsterInfo();
-        }else if (pilihanmain.equals("4")){
-            this.GameInfo();
-        }else if (pilihanmain.equals("1")){
-            selectMove();
-        }
-        // Jika memilih menu 1 atau 2, eksekusi menu --> Ganti giliran
-        // Jika memilih menu selain yang ditampilkan --> Tampilkan menu dalam turn lagi
-
-        
     }
 
-    public void help(){
+    public void start() {
+
+    }
+
+    public static void help() {
         // Deskripsi Permainan
         System.out.println("Deskripsi Permainan: ");
         System.out.println("...");
@@ -99,55 +72,51 @@ public class Game {
         System.out.println("...");
     }
 
-    public void exit(){
+    public static void exit() {
         // Berhenti dari permainan
         System.out.println("Exit from the game.");
         System.exit(0);
     }
 
-    public void MonsterInfo(){
+    public void monsterInfo(Player player) {
         // Menampilkan Atribut Monster yang ada dalam permainan
         /*
-            === LIST OF MONSTERS ====
-            id :
-            name :
-            .....
-        
-        */
-
-        for (int i=0; i<2; i++){
-            playerlist.get(i).printMyMonster();
-        }
+         * === LIST OF MONSTERS ====
+         * id :
+         * name :
+         * .....
+         * 
+         */
+        player.printMyMonster();
     }
 
-    public void GameInfo(){
+    public void gameInfo() {
         // Menampilkan Info Permainan
         /*
-            ==== GAME INFO ====
-        In Turn                             : <Nama Player1>
-        Monster yang sedang Bertarung       : Arrokuda
-        Monster yang sedang Tidak Bertarung : Charmander, Archanine
-
-        
-        */
+         * ==== GAME INFO ====
+         * In Turn : <Nama Player1>
+         * Monster yang sedang Bertarung : Arrokuda
+         * Monster yang sedang Tidak Bertarung : Charmander, Archanine
+         * 
+         * 
+         */
         System.out.println(" ==== GAME INFO ==== ");
-        System.out.println(" In Turn                             : " );
+        System.out.println(" In Turn                             : ");
         System.out.println(" Monster yang sedang bertarung       : ");
         System.out.println(" Monster yang sedang tidak bertarung : ");
     }
 
-    public void selectMove(){
+    public void selectMove() {
         // Menampilkan moves yang dimiliki monster
         // Memilih moves
         // Eksekusi moves
-        
+
     }
 
-    public void switchMonster(){
-        // Menampilkan list monsters pemain beserta health point 
+    public void switchMonster() {
+        // Menampilkan list monsters pemain beserta health point
         // Memilih monster
         // Jika monster yang dipilih sudah mati (HealthPoint = 0) --> Pilih lagi
         // Jika tidak, set Monster yg bertarung
     }
 }
-

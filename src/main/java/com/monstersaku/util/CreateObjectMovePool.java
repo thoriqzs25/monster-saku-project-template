@@ -12,7 +12,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class CreateObjectMovePool {
-    private static String fileName = "configs/movepool.csv";
+    private static String fileName;
+
+    public static void setFileName(String fn) {
+        fileName = fn;
+    }
 
     public static List<Move> create() {
         List<Move> moves = new ArrayList<Move>();

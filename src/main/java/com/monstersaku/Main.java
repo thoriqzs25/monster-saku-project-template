@@ -15,14 +15,65 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Main {
-    // private static final List<String> CSV_FILE_PATHS =
-    // Collections.unmodifiableList(Arrays.asList(
-    // "configs/monsterpool.csv",
-    // "configs/movepool.csv",
-    // "configs/element-type-effectivity-chart.csv"));
-    private static String fileName = "configs/movepool.csv";
+    private static final List<String> CSV_FILE_PATHS = Collections.unmodifiableList(Arrays.asList(
+            "configs/monsterpool.csv",
+            "configs/movepool.csv",
+            "configs/element-type-effectivity-chart.csv"));
+
+    public static void readConfig() {
+        CreateObjectMonsterPool.setFileName(CSV_FILE_PATHS.get(0));
+        CreateObjectMovePool.setFileName(CSV_FILE_PATHS.get(1));
+        FindEffectivity.setFileName(CSV_FILE_PATHS.get(2));
+    }
 
     public static void main(String[] args) {
+        // CSV files configuration setup
+        Scanner scan = new Scanner(System.in);
+        readConfig();
+
+        // Creating necessary objects
+        List<Player> playerList = new ArrayList<Player>();
+        List<Monster> monsterPool = CreateObjectMonsterPool.create();
+        List<Move> movePool = CreateObjectMovePool.create();
+        Display.loading(30);
+
+        // Retrieving input type String from user
+        String cmd = new String();
+        while (true) {
+            Display.showMenuAwal();
+            cmd = scan.next();
+            Display.cls(); // Clear screen
+
+            // Identifying user input
+            switch (cmd) {
+                case "1":
+                    // Input both player names
+                    for (int i = 0; i < 2; i++) {
+                        System.out.printf("Input player %d's name : ", i + 1);
+                        Player player = new Player(new String(scan.next()));
+
+                        // Give all player 6 monsters each and show their first monster to use
+                        AddListMonster.AddMonsters(player, monsterPool);
+                        System.out.printf("Registered first monster to use -> %s\n\n",
+                                player.getCurrentMonster().getName());
+                        playerList.add(player);
+                    }
+                    System.out.printf("Starting");
+                    Display.loading(500);
+                    Display.cls();
+
+                    Game game = new Game(playerList, scan);
+                    break;
+                case "2":
+                    Game.help();
+                    break;
+                case "3":
+                    Game.exit();
+                    break;
+                default:
+                    break;
+            }
+        }
 
         /*
          * List<Move> movePool = new ArrayList<Move>();
@@ -59,30 +110,32 @@ public class Main {
          * elementTypes.add(ElementType.WATER);
          */
         // Masukkin mau berapa pemain yang ikut
-        Scanner inp = new Scanner(System.in);
-        System.out.println("");
-        int i;
-        List<Player> playerlist = new ArrayList<Player>();
-        for (i = 0; i < 2; i++) {
-            // pembuatan objek player
-            System.out.printf("Masukkan nama Player%d: ", i + 1);
-            String name = inp.next();
-            // pembacaan monster pool, pembagoan minster
-            List<Monster> myMonsters = CreateObjectMonsterPool.create();
-            /*
-             * System.out.println(Arrays.toString(myMonsters.toArray()));
-             * System.out.println(myMonsters.get(0).getName());
-             */
-            Player p = new Player(name, myMonsters);
-            playerlist.add(p);
-            playerlist.get(i).printMyMonster();
-        }
+        // Scanner inp = new Scanner(System.in);
+        // System.out.println("");
+        // int i;
+        // List<Player> playerlist = new ArrayList<Player>();
+        // for (i = 0; i < 2; i++) {
+        // // pembuatan objek player
+        // System.out.printf("Masukkan nama Player%d: ", i + 1);
+        // String name = inp.next();
+        // // pembacaan monster pool, pembagoan minster
+        // List<Monster> myMonsters = CreateObjectMonsterPool.create();
+        // /*
+        // * System.out.println(Arrays.toString(myMonsters.toArray()));
+        // * System.out.println(myMonsters.get(0).getName());
+        // */
+        // Player p = new Player(name, myMonsters);
+        // playerlist.add(p);
+        // playerlist.get(i).printMyMonster();
+        // }
         // liat monster setiap pemain
-        /*for (int y = 0; y < 2; y++) {
-            playerlist.get(y).printMyMonster();
-        }*/
+        /*
+         * for (int y = 0; y < 2; y++) {
+         * playerlist.get(y).printMyMonster();
+         * }
+         */
 
-        inp.close();
+        // inp.close();
         /*
          * Monster ima = new Monster(2, "Ima", elementTypesI, baseStatsI,
          * currentStatsI);

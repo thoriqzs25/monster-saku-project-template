@@ -11,7 +11,11 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class FindEffectivity {
-    private static String fileName = "configs/element-type-effectivity-chart.csv";
+    private static String fileName;
+
+    public static void setFileName(String fn) {
+        fileName = fn;
+    }
 
     public static double getValue(ElementType self, ElementType enemy) {
         double value = 1;
