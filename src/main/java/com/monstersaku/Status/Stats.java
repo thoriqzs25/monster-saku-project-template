@@ -1,6 +1,7 @@
 package com.monstersaku.Status;
 
 public class Stats {
+    private double initialHealthPoint; // To track base HP of a monster
     private double healthPoint;
     private double attack;
     private double defense;
@@ -19,6 +20,9 @@ public class Stats {
         this.specialAttack = specialAttack;
         this.specialDefense = specialDefense;
         this.speed = speed;
+
+        // Track default stats of each monster
+        initialHealthPoint = healthPoint;
     }
 
     // All Getter Method
@@ -46,9 +50,33 @@ public class Stats {
         return speed;
     }
 
+    public double getInitialHealthPoint() {
+        return initialHealthPoint;
+    }
+
     // All Setter Method
     public void setHealthPoint(double healthPoint) {
         this.healthPoint = healthPoint;
+    }
+
+    public void setAttack(double attack) {
+        this.attack = attack;
+    }
+
+    public void setDefense(double defense) {
+        this.defense = defense;
+    }
+
+    public void setSpecialAttack(double specialAttack) {
+        this.specialAttack = specialAttack;
+    }
+
+    public void setSpecialDefense(double specialDefense) {
+        this.specialDefense = specialDefense;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 
     public void setWithOutHealthPoint(double attack, double defense, double specialAttack,

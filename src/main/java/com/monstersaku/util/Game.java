@@ -61,6 +61,10 @@ public class Game {
                         break;
                     case "2":
                         System.out.println("Switch!!");
+                        // Display.showAvailableMonster(currentPlayer.getListOfMonsters());
+                        // currentPlayer.setCurrentMove(null);
+                        switchPlayer();
+                        nextPlayer = true;
                         break;
                     case "3":
                         monsterInfo(currentPlayer);
@@ -136,7 +140,15 @@ public class Game {
 
     }
 
-    public void switchMonster() {
+    public void switchMonster(Scanner scan, Player player) {
+        // Show available monster on player's monster list
+        Display.showAvailableMonster(player.getListOfMonsters());
+        int id = scan.nextInt();
+        for (Monster m : player.getListOfMonsters()) {
+            if (id == m.getId()) {
+
+            }
+        }
         // Menampilkan list monsters pemain beserta health point
         // Memilih monster
         // Jika monster yang dipilih sudah mati (HealthPoint = 0) --> Pilih lagi
@@ -174,4 +186,5 @@ public class Game {
             move1.applyMove(player1.getCurrentMonster(), player2.getCurrentMonster());
         }
     }
+
 }

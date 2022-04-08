@@ -3,6 +3,8 @@ package com.monstersaku.util;
 import com.monstersaku.Monsters.Monster;
 import com.monstersaku.Moves.Move;
 
+import java.util.List;
+
 public class Display {
     public static void cls() {
         System.out.print("\033[H\033[2J");
@@ -46,6 +48,20 @@ public class Display {
             System.out.println("id move: " + move.getId());
             System.out.println("move name: " + move.getName());
             System.out.println(" ");
+        }
+    }
+
+    public static void showAvailableMonster(List<Monster> monsterList) {
+        int i = 1;
+        System.out.println("----- Monster available to switch -----");
+        for (Monster monster : monsterList) {
+            System.out.printf("No. %d\n", i);
+            System.out.println("Monster ID: " + monster.getId());
+            System.out.println("Monster name: " + monster.getName());
+            System.out.printf("Monster remaining HP: %d/%d\n", monster.getBaseStats().getHealthPoint(),
+                    monster.getBaseStats().getInitialHealthPoint());
+            System.out.println(" ");
+            i++;
         }
     }
 }
