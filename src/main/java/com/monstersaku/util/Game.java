@@ -61,8 +61,8 @@ public class Game {
                         break;
                     case "2":
                         System.out.println("Switch!!");
-                        // Display.showAvailableMonster(currentPlayer.getListOfMonsters());
-                        // currentPlayer.setCurrentMove(null);
+                        switchMonster(scan, currentPlayer);
+                        currentPlayer.setCurrentMove(null);
                         switchPlayer();
                         nextPlayer = true;
                         break;
@@ -143,12 +143,34 @@ public class Game {
     public void switchMonster(Scanner scan, Player player) {
         // Show available monster on player's monster list
         Display.showAvailableMonster(player.getListOfMonsters());
-        int id = scan.nextInt();
-        for (Monster m : player.getListOfMonsters()) {
-            if (id == m.getId()) {
+        System.out.printf("Input No. to switch: ");
+        int id = scan.nextInt() - 1;
 
+        // If input id is out of range
+        if (id < player.getListOfMonsters().size() && id >= 0) {
+            player.setCurrentMonster(player.getListOfMonsters().get(id));
+        } else {
+            while (id > player.getListOfMonsters().size() && id < 0) {
+                id = scan.nextInt();
+                player.setCurrentMonster(player.getListOfMonsters().get(id));
             }
         }
+
+        // Validate if monster HP below 0
+        while (player.getCurrentMonster().getBaseStats().getHealthPoint() <= 0) {
+            id = scan.nextInt();
+            player.setCurrentMonster(player.getListOfMonsters().get(id));
+        }
+
+        // Display the monster that has been switched successfully
+        System.out.printf("Succeed to switch to %s\n\n", player.getCurrentMonster().getName());
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.println("Failed to switch monster!!!");
+        }
+
         // Menampilkan list monsters pemain beserta health point
         // Memilih monster
         // Jika monster yang dipilih sudah mati (HealthPoint = 0) --> Pilih lagi

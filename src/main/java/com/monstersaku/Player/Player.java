@@ -101,4 +101,8 @@ public class Player {
         this.currentMove = move;
     }
 
+    public void setCurrentMonster(Monster monster) {
+        this.currentMonster = monster;
+    }
+
 }

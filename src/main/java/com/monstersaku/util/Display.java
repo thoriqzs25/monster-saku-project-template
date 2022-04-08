@@ -58,7 +58,7 @@ public class Display {
             System.out.printf("No. %d\n", i);
             System.out.println("Monster ID: " + monster.getId());
             System.out.println("Monster name: " + monster.getName());
-            System.out.printf("Monster remaining HP: %d/%d\n", monster.getBaseStats().getHealthPoint(),
+            System.out.printf("Monster remaining HP: %.1f/%.1f\n", monster.getBaseStats().getHealthPoint(),
                     monster.getBaseStats().getInitialHealthPoint());
             System.out.println(" ");
             i++;
