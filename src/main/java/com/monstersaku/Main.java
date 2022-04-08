@@ -1,3 +1,5 @@
+// INFOOO FIND "CAUTION!!!" di search vscode buat cek hal2 yang penting tapi belom dilakukan.
+
 package com.monstersaku;
 
 import com.monstersaku.Moves.*;
@@ -35,7 +37,7 @@ public class Main {
         List<Player> playerList = new ArrayList<Player>();
         List<Monster> monsterPool = CreateObjectMonsterPool.create();
         List<Move> movePool = CreateObjectMovePool.create();
-        Display.loading(30);
+        Display.loading(10);
 
         // Retrieving input type String from user
         String cmd = new String();
@@ -59,7 +61,7 @@ public class Main {
                         playerList.add(player);
                     }
                     System.out.printf("Starting");
-                    Display.loading(500);
+                    Display.loading(10);
                     Display.cls();
 
                     Game game = new Game(playerList, scan);

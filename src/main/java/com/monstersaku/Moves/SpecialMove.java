@@ -53,16 +53,21 @@ public class SpecialMove extends Move {
     }
 
     public void applyMove(Monster self, Monster enemy) {
-        if (getAmmunition() > 0) {
-            // Enemy
-            double damage = damageCalculation(self, enemy);
-            Stats currentStats = enemy.getCurrentStats();
-            double updateHP = currentStats.getHealthPoint() - damage;
-            currentStats.setHealthPoint(updateHP);
-            enemy.setCurrentStats(currentStats);
-            setAmmunition(getAmmunition() - 1);
+        // If self monster's is actually already died on the round
+        if (self.getBaseStats().getHealthPoint() < 1) {
+            System.out.println("Your monster had died earlier, proceed to next round!!");
         } else {
-            System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());
+            if (getAmmunition() > 0) {
+                // Enemy
+                double damage = damageCalculation(self, enemy);
+                Stats currentStats = enemy.getCurrentStats();
+                double updateHP = currentStats.getHealthPoint() - damage;
+                currentStats.setHealthPoint(updateHP);
+                enemy.setCurrentStats(currentStats);
+                setAmmunition(getAmmunition() - 1);
+            } else {
+                System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());
+            }
         }
     }
 }

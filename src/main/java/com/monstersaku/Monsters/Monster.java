@@ -4,6 +4,7 @@ import com.monstersaku.Status.Stats;
 import com.monstersaku.Moves.Move;
 import com.monstersaku.util.ElementType;
 import com.monstersaku.util.Effect;
+import com.monstersaku.Player.*;
 
 import com.monstersaku.util.CSVReader;
 import java.io.File;
@@ -57,6 +58,10 @@ public class Monster {
     }
 
     // All Getter Method
+    public int getId() {
+        return this.id;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -107,11 +112,28 @@ public class Monster {
     }
 
     // Use monster to play
-    public void play(Scanner scan) {
-        while (true) {
-            String cmd = scan.next();
-            switch (cmd) {
+    public void play(Scanner scan, Player player) {
+        // Array of id's of the owned move by the current monster
+        List<Integer> listId = new ArrayList<Integer>();
+        for (Move m : moves) {
+            listId.add(m.getId());
+        }
 
+        // Validate if move id is available
+        int cmd = -999;
+        while (!listId.contains(cmd)) {
+            System.out.printf("Pick a move : ");
+            cmd = scan.nextInt();
+            for (int i = 0; i < moves.size(); i++) {
+                if (moves.get(i).getId() == cmd) {
+                    System.out.printf("User picked %s\n", moves.get(i).getName());
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        System.out.println("System failed to sleep");
+                    }
+                    player.setCurrentMove(moves.get(i));
+                }
             }
         }
     }

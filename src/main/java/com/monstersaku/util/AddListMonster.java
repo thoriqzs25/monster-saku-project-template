@@ -17,8 +17,7 @@ public class AddListMonster {
         List<Monster> monsss = new ArrayList<Monster>();
         List<Monster> monsterlistfull = monsterPool;
 
-        int i;
-        for (i = 0; i < 6; i++) { // Akan mendapatkan 6 random monster
+        for (int i = 0; i < 6; i++) { // Akan mendapatkan 6 random monster
             Collections.shuffle(monsterlistfull);
             monsss.add(monsterlistfull.get(0));
         }
