@@ -45,6 +45,7 @@ public abstract class Move {
         setName(move.getName());
         setElementType(move.getElementType());
         setAccuracy(move.getAccuracy());
+        setPriority(move.getPriority());
         setAmmunition(move.getAmmunition());
         setTarget(move.getTarget());
         setEffect(move.getEffect());
@@ -108,6 +109,7 @@ public abstract class Move {
         return accuracy;
     }
 
+    // Masih belom bisa ngasih priority yang bener CAUTION!!!
     public int getPriority() {
         return priority;
     }
