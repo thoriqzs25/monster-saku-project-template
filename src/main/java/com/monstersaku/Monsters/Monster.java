@@ -108,10 +108,21 @@ public class Monster {
 
     // Use monster to play
     public void play(Scanner scan) {
-        while (true) {
-            String cmd = scan.next();
-            switch (cmd) {
+        // Array of id's of the owned move by the current monster
+        List<Integer> listId = new ArrayList<Integer>();
+        for (Move m : moves) {
+            listId.add(m.getId());
+            System.out.println(m.getId());
+        }
 
+        int cmd = -999;
+        while (!listId.contains(cmd)) {
+            System.out.printf("Pick a move : ");
+            cmd = scan.nextInt();
+            for (int i = 0; i < moves.size(); i++) {
+                if (moves.get(i).getId() == cmd) {
+                    System.out.println(moves.get(i).getName());
+                }
             }
         }
     }
