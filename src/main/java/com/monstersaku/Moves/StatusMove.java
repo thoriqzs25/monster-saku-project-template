@@ -8,7 +8,7 @@ import com.monstersaku.Status.Stats;
 public class StatusMove extends Move {
 
     public StatusMove() {
-
+        super();
     }
 
     public StatusMove(int id, String moveType, String name, ElementType elementType, int accuracy, int priority,
