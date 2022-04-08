@@ -12,6 +12,7 @@ public class Player {
     private Monster currentMonster;
     private List<Monster> listOfMonster = new ArrayList<Monster>();
     private int numOfMonster;
+    private Move currentMove;
 
     public Player(String name) {
         this.name = name;
@@ -90,6 +91,14 @@ public class Player {
 
     public List<Monster> getListOfMonsters() {
         return this.listOfMonster;
+    }
+
+    public Move getCurrentMove() {
+        return currentMove;
+    }
+
+    public void setCurrentMove(Move move) {
+        this.currentMove = move;
     }
 
 }

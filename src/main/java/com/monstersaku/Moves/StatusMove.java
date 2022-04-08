@@ -51,17 +51,21 @@ public class StatusMove extends Move {
     }
 
     public void applyMove(Monster self, Monster enemy) {
-
-        if (getAmmunition() > 0) {
-            String target = getTarget();
-            if (target.equals("OWN")) {
-                buffSelf(self);
-            } else if (target.equals("ENEMY")) {
-                debuffEnemy(enemy);
-            }
-            setAmmunition(getAmmunition() - 1);
+        // If self monster's is actually already died on the round
+        if (self.getBaseStats().getHealthPoint() < 1) {
+            System.out.println("Your monster had died earlier, proceed to next round!!");
         } else {
-            System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());
+            if (getAmmunition() > 0) {
+                String target = getTarget();
+                if (target.equals("OWN")) {
+                    buffSelf(self);
+                } else if (target.equals("ENEMY")) {
+                    debuffEnemy(enemy);
+                }
+                setAmmunition(getAmmunition() - 1);
+            } else {
+                System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());
+            }
         }
     }
 }
