@@ -93,10 +93,20 @@ public class Game {
 
     public static void help() {
         // Deskripsi Permainan
-        System.out.println("Deskripsi Permainan: ");
-        System.out.println("...");
+        System.out.println("About the Game: ");
+        System.out.println("Monster Saku merupakan sebuah permainan yang diadaptasi dari permainan Pokemon. ");
+        System.out.println("Permainan ini merupakan jenis permainan PvP (Player vs Player) yang bisa dimainkan oleh ");
+        System.out.println("dua pemain yang saling berlawanan. Masing-masing pemain akan menerima kombinasi enam monster ");
+        System.out.println("yang ditentukan secara acak oleh aplikasi pada setiap permainan.");
+
         // Arahan bermain
-        System.out.println("...");
+        System.out.println("How to Play: ");
+        System.out.println("1. Masukkan nama pemain");
+        System.out.println("2. Setiap pemain akan diberikan 6 monster di awal permainan.");
+        System.out.println("3. Setiap pemain akan masuk ke fase pertarungan");
+        System.out.println("4. Setiap pemain secara bergiliran bisa mengganti monster nya (switch) ataupun memilih movenya.");
+        System.out.println("5. Move akan dieksekusi secara bergiliran berdasarkan prioritas dan speed");
+        System.out.println("6. Pemain dengan monster setidaknya satu di akhir permainan akan menjadi pemenang.");
     }
 
     public static void exit() {
