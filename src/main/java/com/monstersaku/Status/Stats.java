@@ -25,6 +25,15 @@ public class Stats {
         initialHealthPoint = healthPoint;
     }
 
+    public Stats(Stats stats) {
+        setHealthPoint(stats.getHealthPoint());
+        setAttack(stats.getAttack());
+        setDefense(stats.getDefense());
+        setSpecialAttack(stats.getSpecialAttack());
+        setSpecialDefense(stats.getSpecialDefense());
+        setSpeed(stats.getSpeed());
+    }
+
     // All Getter Method
     public double getHealthPoint() {
         return healthPoint;

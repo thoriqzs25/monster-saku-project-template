@@ -68,7 +68,7 @@ public class CreateObjectMovePool {
 
         } catch (Exception e) {
             // do nothing
-            System.out.println("Error getValue effectivity");
+            System.out.println("Error CreateObjectMovePool");
         }
         return moves;
     }

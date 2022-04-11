@@ -39,6 +39,10 @@ public abstract class Move {
         this.effect = effect;
     }
 
+    public Move(Move move) {
+        this.copyMove(move);
+    }
+
     public void copyMove(Move move) {
         setId(move.getId());
         setMoveType(move.getMoveType());
@@ -46,7 +50,7 @@ public abstract class Move {
         setElementType(move.getElementType());
         setAccuracy(move.getAccuracy());
         setPriority(move.getPriority());
-        setAmmunition(move.getAmmunition());
+        this.ammunition = move.getAmmunition();
         setTarget(move.getTarget());
         setEffect(move.getEffect());
     }
