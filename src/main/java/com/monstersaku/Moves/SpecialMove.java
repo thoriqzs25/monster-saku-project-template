@@ -15,6 +15,10 @@ public class SpecialMove extends Move {
 
     }
 
+    public SpecialMove(Move move) {
+        super(move);
+    }
+
     public SpecialMove(int id, String moveType, String name, ElementType elementType, int accuracy, int priority,
             int ammunition, String target, Effect effect) {
         setMove(id, moveType, name, elementType, accuracy, priority, ammunition, target, effect);
@@ -62,6 +66,9 @@ public class SpecialMove extends Move {
                 double damage = damageCalculation(self, enemy);
                 Stats currentStats = enemy.getCurrentStats();
                 double updateHP = currentStats.getHealthPoint() - damage;
+                if (updateHP <= 0) {
+                    updateHP = 0;
+                }
                 currentStats.setHealthPoint(updateHP);
                 enemy.setCurrentStats(currentStats);
                 setAmmunition(getAmmunition() - 1);

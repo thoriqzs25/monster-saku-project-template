@@ -29,14 +29,33 @@ public class Main {
     }
 
     public static void main(String[] args) {
+
+        // Stats baseStatsI = new Stats(100, 100, 100, 100, 100, 100);
+        // Stats currentStatsI = new Stats(100, 100, 100, 100, 100, 100);
+        // List<ElementType> elementTypesI = new ArrayList<ElementType>();
+        // elementTypesI.add(ElementType.WATER);
+        // Monster ima = new Monster(2, "Ima", elementTypesI, baseStatsI,
+        // currentStatsI);
+        // int[] movesIma = { 1, 4 };
+        // AddListMove.add(ima, movesIma, movePool);
+
+        // Monster mimic = new Monster(ima);
+        // Move moveIma = ima.getMoves().get(1);
+        // Move moveMimic = mimic.getMoves().get(1);
+        // moveIma.applyMove(ima, mimic);
+        // moveIma.applyMove(ima, mimic);
+        // System.out.println(moveIma.getName());
+        // System.out.println("Ima name: " + moveIma.getAmmunition());
+        // System.out.println("Mimic name: " + moveMimic.getAmmunition());
+
         // CSV files configuration setup
         Scanner scan = new Scanner(System.in);
         readConfig();
 
         // Creating necessary objects
+        List<Move> movePool = CreateObjectMovePool.create();
         List<Player> playerList = new ArrayList<Player>();
         List<Monster> monsterPool = CreateObjectMonsterPool.create();
-        List<Move> movePool = CreateObjectMovePool.create();
         Display.loading(10);
 
         // Retrieving input type String from user
@@ -55,7 +74,7 @@ public class Main {
                         Player player = new Player(new String(scan.next()));
 
                         // Give all player 6 monsters each and show their first monster to use
-                        AddListMonster.AddMonsters(player, monsterPool);
+                        AddListMonster.AddMonsters(player, monsterPool, movePool);
                         System.out.printf("Registered first monster to use -> %s\n\n",
                                 player.getCurrentMonster().getName());
                         playerList.add(player);

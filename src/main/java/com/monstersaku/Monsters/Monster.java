@@ -57,6 +57,22 @@ public class Monster {
         this.statusCondition = statusCondition;
     }
 
+    public Monster(Monster monster) {
+        this.copyMonster(monster);
+    }
+
+    public void copyMonster(Monster monster) {
+        setId(monster.getId());
+        setName(monster.getName());
+        setElementTypes(monster.getElementTypes());
+        setBaseStats(monster.getBaseStats());
+        this.currentStats = new Stats(monster.getCurrentStats());
+        List<Move> mv = new ArrayList<Move>();
+        mv = monster.getMoves();
+        setMoves(mv);
+        setStatusCondition(monster.getStatusCondition());
+    }
+
     // All Getter Method
     public int getId() {
         return this.id;
@@ -87,12 +103,32 @@ public class Monster {
     }
 
     // All Setter Method
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setElementTypes(List<ElementType> elementTypes) {
+        this.elementTypes = elementTypes;
+    }
+
+    public void setBaseStats(Stats baseStats) {
+        this.baseStats = baseStats;
+    }
+
     public void setCurrentStats(Stats currentStats) {
         this.currentStats = currentStats;
     }
 
     public void setMoves(List<Move> moves) {
         this.moves = moves;
+    }
+
+    public void setStatusCondition(String statusCondition) {
+        this.statusCondition = statusCondition;
     }
 
     public void outputMonster() {

@@ -2,6 +2,8 @@
 
 package com.monstersaku.util;
 
+import java.lang.Math;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,7 +11,9 @@ import java.util.Scanner;
 
 import com.monstersaku.Monsters.Monster;
 import com.monstersaku.Moves.Move;
+import com.monstersaku.Moves.StatusMove;
 import com.monstersaku.Player.*;
+import com.monstersaku.Status.*;
 
 public class Game {
 
@@ -18,6 +22,9 @@ public class Game {
     private String winner;
     private Player currentPlayer;
     private Boolean nextPlayer; // Trigger to indicate if a player turn has ended
+    private int turn = 1;
+    private int endEffectTurn = 0;
+    private int turnDapatBerjalan = 0;
 
     public Game(List<Player> playerList, Scanner scan) {
         // Set list of players for the current game
@@ -31,6 +38,7 @@ public class Game {
             // Start new round
             startRound(scan);
             System.out.println("BOTH PLAYER HAVE PICKED TURN");
+            turn++;
 
             // Apply picked action
 
@@ -47,6 +55,15 @@ public class Game {
             while (!nextPlayer) {
                 // Display current player's name
                 System.out.printf("--%s's TURN ---\n", currentPlayer.getName().toUpperCase());
+                System.out.println("--TURN: " + turn + " ---");
+                currentMonsterStats(); // Nampilin status monster skrg
+                if (applyStatusConditon(currentPlayer.getCurrentMonster())) {
+                    currentPlayer.setCurrentMove(null);
+                    System.out.println(currentPlayer.getCurrentMove() == null);
+                    switchPlayer();
+                    nextPlayer = true;
+                    break;
+                }
                 Display.showMenuDalamTurn();
                 cmd = scan.next();
                 Display.cls(); // Clear screen
@@ -87,7 +104,13 @@ public class Game {
 
         // If both player choose to move their monster
         if (playerList.get(0).getCurrentMove() != null && playerList.get(1).getCurrentMove() != null) {
-            accumulateAction();
+            accumulateAction(scan);
+        } else if (playerList.get(0).getCurrentMove() != null) {
+            System.out.println("#### ONYL FIRST PLAYER ####");
+            onlyPlayer1(scan);
+        } else if (playerList.get(1).getCurrentMove() != null) {
+            System.out.println("#### ONYL SECOND PLAYER ####");
+            onlyPlayer2(scan);
         }
     }
 
@@ -96,7 +119,8 @@ public class Game {
         System.out.println("About the Game: ");
         System.out.println("Monster Saku merupakan sebuah permainan yang diadaptasi dari permainan Pokemon. ");
         System.out.println("Permainan ini merupakan jenis permainan PvP (Player vs Player) yang bisa dimainkan oleh ");
-        System.out.println("dua pemain yang saling berlawanan. Masing-masing pemain akan menerima kombinasi enam monster ");
+        System.out.println(
+                "dua pemain yang saling berlawanan. Masing-masing pemain akan menerima kombinasi enam monster ");
         System.out.println("yang ditentukan secara acak oleh aplikasi pada setiap permainan.");
 
         // Arahan bermain
@@ -104,7 +128,8 @@ public class Game {
         System.out.println("1. Masukkan nama pemain");
         System.out.println("2. Setiap pemain akan diberikan 6 monster di awal permainan.");
         System.out.println("3. Setiap pemain akan masuk ke fase pertarungan");
-        System.out.println("4. Setiap pemain secara bergiliran bisa mengganti monster nya (switch) ataupun memilih movenya.");
+        System.out.println(
+                "4. Setiap pemain secara bergiliran bisa mengganti monster nya (switch) ataupun memilih movenya.");
         System.out.println("5. Move akan dieksekusi secara bergiliran berdasarkan prioritas dan speed");
         System.out.println("6. Pemain dengan monster setidaknya satu di akhir permainan akan menjadi pemenang.");
     }
@@ -193,8 +218,77 @@ public class Game {
         currentPlayer = playerList.get(playerTurn % 2);
     }
 
+    public void currentMonsterStats() {
+        Monster monster = currentPlayer.getCurrentMonster();
+        System.out.println("Monster name: " + monster.getName());
+        System.out.println("Status condition: " + monster.getStatusCondition());
+        System.out.printf("Monster remaining HP: %.1f/%.1f\n", monster.getCurrentStats().getHealthPoint(),
+                monster.getBaseStats().getInitialHealthPoint());
+    }
+
+    public boolean monsterHadDied(Monster monster) {
+        if (monster.getCurrentStats().getHealthPoint() <= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean applyStatusConditon(Monster monster) {
+        String status = monster.getStatusCondition();
+        Stats currentStats = monster.getCurrentStats();
+        Stats baseStats = monster.getBaseStats();
+        if (status.equals("POISON")) {
+            System.out.println(monster.getName() + " terkena damage poison");
+            double damage = baseStats.getHealthPoint() / 16;
+            double updateHP = currentStats.getHealthPoint() - damage;
+            if (updateHP <= 0) {
+                updateHP = 0;
+            }
+            currentStats.setHealthPoint(updateHP);
+            monster.setCurrentStats(currentStats);
+            return false;
+        } else if (status.equals("SLEEP") && endEffectTurn > 0) {
+            System.out.println("----Effect Sleep----");
+            System.out.println(monster.getName() + " masih tertidur");
+            endEffectTurn--;
+            System.out.println("Dapat berjalan lagi pada turn: " + (turnDapatBerjalan + 1));
+            System.out.println("--------------------");
+            System.out.println("");
+            return true;
+        } else if (status.equals("SLEEP") && endEffectTurn <= 0) {
+            monster.setStatusCondition("-");
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isPlayer1MoveFirst(int priority1, int priority2, double speed1, double speed2) {
+
+        if (priority1 > priority2) {
+            return true;
+        } else if (priority1 < priority2) {
+            return false;
+        } else {
+            if (speed1 > speed2) {
+                return true;
+            } else if (speed1 < speed2) {
+                return false;
+            } else {
+                int range = 2;
+                int rand = (int) (Math.random() * range) + 1;
+                if (rand == 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+
     // Start action for each round
-    public void accumulateAction() {
+    public void accumulateAction(Scanner scan) {
         // Assign each player
         Player player1 = playerList.get(0);
         Player player2 = playerList.get(1);
@@ -205,17 +299,122 @@ public class Game {
         int priority1 = move1.getPriority();
         int priority2 = move2.getPriority();
 
-        // Check which priority to move first
-        if (priority1 > priority2) {
+        // Assign each player's speed
+        double speed1 = player1.getCurrentMonster().getBaseStats().getSpeed();
+        double speed2 = player2.getCurrentMonster().getBaseStats().getSpeed();
+        boolean sleep1 = false;
+        boolean sleep2 = false;
+        // Boolean untuk mengecek siapa yang duluan
+        boolean moveplayer1 = isPlayer1MoveFirst(priority1, priority2, speed1, speed2);
+
+        // Eksekusi Move
+        if (moveplayer1) {
             move1.applyMove(player1.getCurrentMonster(), player2.getCurrentMonster());
-            move2.applyMove(player2.getCurrentMonster(), player1.getCurrentMonster());
-        } else if (priority1 == priority2) {
-            // Asumsi belom random CAUTION!!!
-            move1.applyMove(player1.getCurrentMonster(), player2.getCurrentMonster());
-            move2.applyMove(player2.getCurrentMonster(), player1.getCurrentMonster());
+            // Setting endEffectTurn bila menggunakan SLEEP
+            sleep1 = move1.getEffect().getStatusCondition().equals("SLEEP");
+            if (sleep1) {
+                endEffectTurn = StatusMove.randomTurnSleepEffect();
+                turnDapatBerjalan = turn + endEffectTurn;
+            }
+            // Cek enemy monster mati
+            if (monsterHadDied(player2.getCurrentMonster())) {
+                System.out.println(
+                        player2.getName() + "'s Monster had died (" + player2.getCurrentMonster().getName() + ")");
+                System.out.println("Switch your Monster");
+                switchMonster(scan, player2);
+            } else {
+                move2.applyMove(player2.getCurrentMonster(), player1.getCurrentMonster());
+                // Setting endEffectTurn bila menggunakan SLEEP
+                if (move2.getEffect().getStatusCondition().equals("SLEEP")) {
+                    int range = 7;
+                    int rand = (int) (Math.random() * range) + 1;
+                    endEffectTurn = rand;
+                    turnDapatBerjalan = turn + endEffectTurn;
+                }
+                // Cek monster 1 mati
+                if (monsterHadDied(player1.getCurrentMonster())) {
+                    System.out.println(
+                            player1.getName() + "'s Monster had died (" + player1.getCurrentMonster().getName() + ")");
+                    System.out.println("Switch your Monster");
+                    switchMonster(scan, player1);
+                }
+            }
         } else {
             move2.applyMove(player2.getCurrentMonster(), player1.getCurrentMonster());
-            move1.applyMove(player1.getCurrentMonster(), player2.getCurrentMonster());
+            // Setting endEffectTurn bila menggunakan SLEEP
+            if (move2.getEffect().getStatusCondition().equals("SLEEP")) {
+                int range = 7;
+                int rand = (int) (Math.random() * range) + 1;
+                endEffectTurn = rand;
+                turnDapatBerjalan = turn + endEffectTurn;
+            }
+            // Cek monster 1 mati
+            if (monsterHadDied(player1.getCurrentMonster())) {
+                System.out.println(
+                        player1.getName() + "'s Monster had died (" + player1.getCurrentMonster().getName() + ")");
+                System.out.println("Switch your Monster");
+                switchMonster(scan, player1);
+            } else {
+                move1.applyMove(player1.getCurrentMonster(), player2.getCurrentMonster());
+                // Setting endEffectTurn bila menggunakan SLEEP
+                if (move1.getEffect().getStatusCondition().equals("SLEEP")) {
+                    int range = 7;
+                    int rand = (int) (Math.random() * range) + 1;
+                    endEffectTurn = rand;
+                    turnDapatBerjalan = turn + endEffectTurn;
+                }
+
+                // Cek monster 2 mati
+                if (monsterHadDied(player2.getCurrentMonster())) {
+                    System.out.println(
+                            player2.getName() + "'s Monster had died (" + player2.getCurrentMonster().getName() + ")");
+                    System.out.println("Switch your Monster");
+                    switchMonster(scan, player2);
+                }
+            }
+        }
+    }
+
+    public void onlyPlayer1(Scanner scan) {
+        Player player1 = playerList.get(0);
+        Player player2 = playerList.get(1);
+        Move move1 = player1.getCurrentMove();
+        move1.applyMove(player1.getCurrentMonster(), player2.getCurrentMonster());
+        // Setting endEffectTurn bila menggunakan SLEEP
+        if (move1.getEffect().getStatusCondition().equals("SLEEP")) {
+            int range = 7;
+            int rand = (int) (Math.random() * range) + 1;
+            endEffectTurn = rand;
+            turnDapatBerjalan = turn + endEffectTurn;
+        }
+
+        if (monsterHadDied(player2.getCurrentMonster())) {
+            System.out.println(
+                    player2.getName() + "'s Monster had died (" + player2.getCurrentMonster().getName() + ")");
+            System.out.println("Switch your Monster");
+            switchMonster(scan, player2);
+        }
+    }
+
+    public void onlyPlayer2(Scanner scan) {
+        Player player1 = playerList.get(0);
+        Player player2 = playerList.get(1);
+        Move move2 = player2.getCurrentMove();
+        move2.applyMove(player2.getCurrentMonster(), player1.getCurrentMonster());
+        // Setting endEffectTurn bila menggunakan SLEEP
+        if (move2.getEffect().getStatusCondition().equals("SLEEP")) {
+            int range = 7;
+            int rand = (int) (Math.random() * range) + 1;
+            endEffectTurn = rand;
+            turnDapatBerjalan = turn + endEffectTurn;
+        }
+
+        // Cek monster 1 mati
+        if (monsterHadDied(player1.getCurrentMonster())) {
+            System.out.println(
+                    player1.getName() + "'s Monster had died (" + player1.getCurrentMonster().getName() + ")");
+            System.out.println("Switch your Monster");
+            switchMonster(scan, player1);
         }
     }
 
