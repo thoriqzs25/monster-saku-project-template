@@ -84,4 +84,14 @@ public class StatusMove extends Move {
         int rand = (int) (Math.random() * range) + 1;
         return rand;
     }
+
+    public static boolean randomTurnsParalzeEffect() {
+        double rand = Math.random();
+        if (rand <= 0.25) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
