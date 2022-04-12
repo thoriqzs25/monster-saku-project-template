@@ -105,4 +105,19 @@ public class Player {
         this.currentMonster = monster;
     }
 
+    public boolean isAllMonsterDied() {
+        int i = 0;
+        while (true || i < 6) {
+            // If a single monster still have HP, the loop will break and it will return
+            // false;
+            if (listOfMonster.get(i).getCurrentStats().getHealthPoint() > 0) {
+                break;
+                // If the last monster's HP is below 0, return true that all monster have 0 HP
+            } else if (listOfMonster.get(5).getCurrentStats().getHealthPoint() <= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
