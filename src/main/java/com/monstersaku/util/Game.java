@@ -54,16 +54,16 @@ public class Game {
             nextPlayer = false;
             while (!nextPlayer) {
                 // Display current player's name
+                System.out.println("--Player " + (playerTurn % 2 + 1) + " ---");
                 System.out.printf("--%s's TURN ---\n", currentPlayer.getName().toUpperCase());
                 System.out.println("--TURN: " + turn + " ---");
-                currentMonsterStats(); // Nampilin status monster skrg
-                if (applyStatusConditon(currentPlayer.getCurrentMonster())) {
+                if (applyStatusConditon(currentPlayer.getCurrentMonster(), scan, currentPlayer)) {
                     currentPlayer.setCurrentMove(null);
-                    System.out.println(currentPlayer.getCurrentMove() == null);
                     switchPlayer();
                     nextPlayer = true;
                     break;
                 }
+                currentMonsterStats(); // Nampilin status monster skrg
                 Display.showMenuDalamTurn();
                 cmd = scan.next();
                 Display.cls(); // Clear screen
@@ -239,19 +239,24 @@ public class Game {
         }
     }
 
-    public boolean applyStatusConditon(Monster monster) {
+    public boolean applyStatusConditon(Monster monster, Scanner scan, Player currentPlayer) {
         String status = monster.getStatusCondition();
         Stats currentStats = monster.getCurrentStats();
         Stats baseStats = monster.getBaseStats();
         if (status.equals("POISON")) {
             System.out.println(monster.getName() + " terkena damage poison");
-            double damage = baseStats.getHealthPoint() / 16;
+            double damage = baseStats.getHealthPoint();
             double updateHP = currentStats.getHealthPoint() - damage;
             if (updateHP <= 0) {
+                System.out.println("Monster mati karena Poison");
                 updateHP = 0;
+                currentStats.setHealthPoint(updateHP);
+                monster.setCurrentStats(currentStats);
+                switchMonster(scan, currentPlayer);
+            } else {
+                currentStats.setHealthPoint(updateHP);
+                monster.setCurrentStats(currentStats);
             }
-            currentStats.setHealthPoint(updateHP);
-            monster.setCurrentStats(currentStats);
             return false;
         } else if (status.equals("SLEEP") && endEffectTurn > 0) {
             System.out.println("----Effect Sleep----");
