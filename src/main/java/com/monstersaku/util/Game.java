@@ -180,22 +180,27 @@ public class Game {
         Display.showAvailableMonster(player.getListOfMonsters());
         System.out.printf("Input No. to switch: ");
         int id = scan.nextInt() - 1;
-
-        // If input id is out of range
-        if (id < player.getListOfMonsters().size() && id >= 0) {
-            player.setCurrentMonster(player.getListOfMonsters().get(id));
-        } else {
-            while (id > player.getListOfMonsters().size() && id < 0) {
-                id = scan.nextInt();
-                player.setCurrentMonster(player.getListOfMonsters().get(id));
+        int indexMonster = player.getIndexMonster();
+        double monsterHP = 1;
+        if (id >= 0 && id < player.getListOfMonsters().size()) {
+            monsterHP = player.getListOfMonsters().get(id).getCurrentStats().getHealthPoint();
+        }
+        while (id > player.getListOfMonsters().size() - 1 || id < 0 || id == indexMonster || monsterHP <= 0) {
+            if (id > player.getListOfMonsters().size() - 1 || id < 0) {
+                System.out.println("Input not valid!!");
+            } else if (monsterHP <= 0) {
+                System.out.println("Monster had died, choose other monster!");
+            } else if (id == indexMonster) {
+                System.out.println("Anda sedang menggunakan monster tersebut");
+            }
+            System.out.printf("Input No. to switch: ");
+            id = scan.nextInt() - 1;
+            if (id >= 0 && id < player.getListOfMonsters().size()) {
+                monsterHP = player.getListOfMonsters().get(id).getCurrentStats().getHealthPoint();
             }
         }
-
-        // Validate if monster HP below 0
-        while (player.getCurrentMonster().getBaseStats().getHealthPoint() <= 0) {
-            id = scan.nextInt();
-            player.setCurrentMonster(player.getListOfMonsters().get(id));
-        }
+        player.setCurrentMonster(player.getListOfMonsters().get(id));
+        player.setIndextMonster(id);
 
         // Display the monster that has been switched successfully
         System.out.printf("Succeed to switch to %s\n\n", player.getCurrentMonster().getName());
@@ -262,7 +267,7 @@ public class Game {
         } else if (status.equals("PARALYZE")) {
             if (StatusMove.randomTurnsParalzeEffect()) {
                 System.out.println("----Effect Paralyze----");
-                System.out.println("KENA STUN GBLK");
+                System.out.println("Monster tidak bisa bergerak");
                 System.out.println("--------------------");
                 System.out.println("");
                 return true;
@@ -322,21 +327,40 @@ public class Game {
         boolean moveplayer1 = isPlayer1MoveFirst(priority1, priority2, speed1, speed2);
         boolean enemyMove = true;
 
+        boolean monstersdied1 = false;
+        boolean monstersdied2 = false;
         // Eksekusi Move
         if (moveplayer1) {
             move1.applyMove(player1.getCurrentMonster(), player2.getCurrentMonster());
+            monstersdied2 = player2.isAllMonsterDied();
+
+            // Cek apakah semua monster player 2 mati
+            if (monstersdied2) {
+                player1Win(player1);
+            }
+
             // Setting endEffectTurn bila menggunakan SLEEP
             sleep1 = move1.getEffect().getStatusCondition().equals("SLEEP");
             if (sleep1) {
                 endEffectTurn = StatusMove.randomTurnSleepEffect();
                 turnDapatBerjalan = turn + endEffectTurn;
                 enemyMove = false;
+                System.out.println("----Effect Sleep----");
+                System.out.println(
+                        "Move dari " + player2.getName() + " tidak dijalankan karena monster terkena effect Sleep");
+                System.out.println("--------------------");
+                System.out.println("");
             }
             // Setting effect paraylze
             paralyze1 = move1.getEffect().getStatusCondition().equals("PARALYZE");
             if (paralyze1) {
                 if (StatusMove.randomTurnsParalzeEffect()) {
                     enemyMove = false;
+                    System.out.println("----Effect Paralyze----");
+                    System.out.println(
+                            "Move dari " + player2.getName()
+                                    + " tidak dijalankan karena monster terkena effect Paralyze");
+                    System.out.println("--------------------");
                 }
             }
             // Cek enemy monster mati
@@ -349,6 +373,11 @@ public class Game {
             }
             if (enemyMove) {
                 move2.applyMove(player2.getCurrentMonster(), player1.getCurrentMonster());
+                monstersdied1 = player1.isAllMonsterDied();
+                // Cek apakah monster player 1 mati semua
+                if (monstersdied1) {
+                    player2Win(player2);
+                }
                 // Setting endEffectTurn bila menggunakan SLEEP
                 if (move2.getEffect().getStatusCondition().equals("SLEEP")) {
                     endEffectTurn = StatusMove.randomTurnSleepEffect();
@@ -364,18 +393,33 @@ public class Game {
             }
         } else {
             move2.applyMove(player2.getCurrentMonster(), player1.getCurrentMonster());
+            monstersdied1 = player1.isAllMonsterDied();
+            // Cek apakah semua monster player 1 mati
+            if (monstersdied1) {
+                player2Win(player2);
+            }
             // Setting endEffectTurn bila menggunakan SLEEP
             sleep2 = move2.getEffect().getStatusCondition().equals("SLEEP");
             if (sleep2) {
                 enemyMove = false;
                 endEffectTurn = StatusMove.randomTurnSleepEffect();
                 turnDapatBerjalan = turn + endEffectTurn;
+                System.out.println("----Effect Sleep----");
+                System.out.println(
+                        "Move dari " + player1.getName() + " tidak dijalankan karena monster terkena effect Sleep");
+                System.out.println("--------------------");
+                System.out.println("");
             }
             // Setting effect paraylze
             paralyze2 = move1.getEffect().getStatusCondition().equals("PARALYZE");
             if (paralyze2) {
                 if (StatusMove.randomTurnsParalzeEffect()) {
                     enemyMove = false;
+                    System.out.println("----Effect Paralyze----");
+                    System.out.println(
+                            "Move dari " + player2.getName()
+                                    + " tidak dijalankan karena monster terkena effect Paralyze");
+                    System.out.println("--------------------");
                 }
             }
             // Cek monster 1 mati
@@ -388,6 +432,11 @@ public class Game {
             }
             if (enemyMove) {
                 move1.applyMove(player1.getCurrentMonster(), player2.getCurrentMonster());
+                monstersdied2 = player2.isAllMonsterDied();
+                // Cek apakah semua monster player 2 mati
+                if (monstersdied2) {
+                    player1Win(player1);
+                }
                 // Setting endEffectTurn bila menggunakan SLEEP
                 if (move1.getEffect().getStatusCondition().equals("SLEEP")) {
                     endEffectTurn = StatusMove.randomTurnSleepEffect();
@@ -408,7 +457,13 @@ public class Game {
         Player player1 = playerList.get(0);
         Player player2 = playerList.get(1);
         Move move1 = player1.getCurrentMove();
+        boolean monstersdied2 = false;
         move1.applyMove(player1.getCurrentMonster(), player2.getCurrentMonster());
+        monstersdied2 = player2.isAllMonsterDied();
+        // Cek apakah semua monster player 2 mati
+        if (monstersdied2) {
+            player1Win(player1);
+        }
         // Setting endEffectTurn bila menggunakan SLEEP
         if (move1.getEffect().getStatusCondition().equals("SLEEP")) {
             endEffectTurn = StatusMove.randomTurnSleepEffect();
@@ -427,7 +482,12 @@ public class Game {
         Player player1 = playerList.get(0);
         Player player2 = playerList.get(1);
         Move move2 = player2.getCurrentMove();
+        boolean monstersdied1 = false;
         move2.applyMove(player2.getCurrentMonster(), player1.getCurrentMonster());
+        // Cek apakah semua monster player 1 mati
+        if (monstersdied1) {
+            player2Win(player2);
+        }
         // Setting endEffectTurn bila menggunakan SLEEP
         if (move2.getEffect().getStatusCondition().equals("SLEEP")) {
             endEffectTurn = StatusMove.randomTurnSleepEffect();
@@ -440,6 +500,24 @@ public class Game {
                     player1.getName() + "'s Monster had died (" + player1.getCurrentMonster().getName() + ")");
             System.out.println("Switch your Monster");
             switchMonster(scan, player1);
+        }
+    }
+
+    public void player1Win(Player player1) {
+        System.out.println(player1.getName() + " is the Winner!!");
+        try {
+            Thread.sleep(5000);
+            System.exit(0);
+        } catch (Exception e) {
+        }
+    }
+
+    public void player2Win(Player player2) {
+        System.out.println(player2.getName() + " is the Winner!!");
+        try {
+            Thread.sleep(5000);
+            System.exit(0);
+        } catch (Exception e) {
         }
     }
 

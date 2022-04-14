@@ -37,7 +37,6 @@ public class DefaultMove extends Move {
                     updateHPSelf = 0;
                 }
                 self.setCurrentStats(currentStatsSelf);
-                setAmmunition(getAmmunition() - 1);
 
             } else {
                 System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());
