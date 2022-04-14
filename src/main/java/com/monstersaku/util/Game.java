@@ -245,7 +245,7 @@ public class Game {
         Stats baseStats = monster.getBaseStats();
         if (status.equals("POISON")) {
             System.out.println(monster.getName() + " terkena damage poison");
-            double damage = baseStats.getHealthPoint();
+            double damage = baseStats.getHealthPoint() / 16;
             double updateHP = currentStats.getHealthPoint() - damage;
             if (updateHP <= 0) {
                 System.out.println("Monster mati karena Poison");
