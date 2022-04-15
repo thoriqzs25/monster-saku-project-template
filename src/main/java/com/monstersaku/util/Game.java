@@ -163,9 +163,21 @@ public class Game {
          * 
          */
         System.out.println(" ==== GAME INFO ==== ");
-        System.out.println(" In Turn                             : ");
-        System.out.println(" Monster yang sedang bertarung       : ");
-        System.out.println(" Monster yang sedang tidak bertarung : ");
+        System.out.println(" In Turn                             : " + currentPlayer.getName());
+        System.out.println(" Monster yang sedang bertarung       : " + currentPlayer.getCurrentMonster().getName());
+        List<String> monsterNotPlay = new ArrayList<String>();
+        List<Monster> monstersPlayer = new ArrayList<Monster>();
+        monstersPlayer = currentPlayer.getListOfMonsters();
+        for (int i = 0; i < 6; i++) {
+            if (i != currentPlayer.getIndexMonster()) {
+                monsterNotPlay.add(monstersPlayer.get(i).getName());
+            }
+        }
+        System.out.printf(" Monster yang sedang tidak bertarung : ");
+        for (int j = 0; j < 4; j++) {
+            System.out.printf("%s, ", monsterNotPlay.get(j));
+        }
+        System.out.println(monsterNotPlay.get(4));
     }
 
     public void selectMove() {
