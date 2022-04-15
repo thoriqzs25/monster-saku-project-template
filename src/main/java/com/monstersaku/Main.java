@@ -28,28 +28,12 @@ public class Main {
         FindEffectivity.setFileName(CSV_FILE_PATHS.get(2));
     }
 
+    static Scanner scan = new Scanner(System.in);
+
     public static void main(String[] args) {
 
-        // Stats baseStatsI = new Stats(100, 100, 100, 100, 100, 100);
-        // Stats currentStatsI = new Stats(100, 100, 100, 100, 100, 100);
-        // List<ElementType> elementTypesI = new ArrayList<ElementType>();
-        // elementTypesI.add(ElementType.WATER);
-        // Monster ima = new Monster(2, "Ima", elementTypesI, baseStatsI,
-        // currentStatsI);
-        // int[] movesIma = { 1, 4 };
-        // AddListMove.add(ima, movesIma, movePool);
-
-        // Monster mimic = new Monster(ima);
-        // Move moveIma = ima.getMoves().get(1);
-        // Move moveMimic = mimic.getMoves().get(1);
-        // moveIma.applyMove(ima, mimic);
-        // moveIma.applyMove(ima, mimic);
-        // System.out.println(moveIma.getName());
-        // System.out.println("Ima name: " + moveIma.getAmmunition());
-        // System.out.println("Mimic name: " + moveMimic.getAmmunition());
-
         // CSV files configuration setup
-        Scanner scan = new Scanner(System.in);
+
         readConfig();
 
         // Creating necessary objects
@@ -59,12 +43,11 @@ public class Main {
         Display.loading(10);
 
         // Retrieving input type String from user
-        String cmd = new String();
+        String cmd;
         while (true) {
             Display.showMenuAwal();
             cmd = scan.next();
             Display.cls(); // Clear screen
-
             // Identifying user input
             switch (cmd) {
                 case "1":
@@ -94,6 +77,7 @@ public class Main {
                 default:
                     break;
             }
+
         }
 
         /*

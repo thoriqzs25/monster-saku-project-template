@@ -20,7 +20,6 @@ public class FindEffectivity {
     public static double getValue(ElementType self, ElementType enemy) {
         double value = 1;
         try {
-            System.out.printf("Filename: %s\n", fileName);
             CSVReader reader = new CSVReader(new File(Main.class.getResource(fileName).toURI()), ";");
             reader.setSkipHeader(true);
             List<String[]> lines = reader.read();
