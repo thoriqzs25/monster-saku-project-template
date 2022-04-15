@@ -1,3 +1,10 @@
+KELOMPOK 22
+
+18220054 Salimatussholati Az Zahra
+18220076 Muhammad Rayfasa Candra
+18220092 Thariq Zhafran Satyagraha
+18220096 Aufa Fauqi Ardhiqi
+
 # IF2212 Project Template
 
 Here is an example of project using gradle as the build tools.
