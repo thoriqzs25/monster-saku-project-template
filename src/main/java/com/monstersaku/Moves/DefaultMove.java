@@ -22,6 +22,9 @@ public class DefaultMove extends Move {
                 double damage = damageCalculation(self, enemy);
                 Stats currentStats = enemy.getCurrentStats();
                 double updateHP = currentStats.getHealthPoint() - damage;
+                if (updateHP <= 0) {
+                    updateHP = 0;
+                }
                 currentStats.setHealthPoint(updateHP);
                 enemy.setCurrentStats(currentStats);
 
@@ -30,8 +33,10 @@ public class DefaultMove extends Move {
                 Stats currentStatsSelf = self.getCurrentStats();
                 double updateHPSelf = baseStatsSelf.getHealthPoint() * 3 / 4;
                 currentStatsSelf.setHealthPoint(updateHPSelf);
+                if (updateHPSelf <= 0) {
+                    updateHPSelf = 0;
+                }
                 self.setCurrentStats(currentStatsSelf);
-                setAmmunition(getAmmunition() - 1);
 
             } else {
                 System.out.println("Ammunition sudah habis, tidak bisa menggunakan " + getName());

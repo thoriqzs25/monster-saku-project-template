@@ -13,6 +13,7 @@ public class Player {
     private List<Monster> listOfMonster = new ArrayList<Monster>();
     private int numOfMonster;
     private Move currentMove;
+    private int indexMonster = 0;
 
     public Player(String name) {
         this.name = name;
@@ -103,6 +104,26 @@ public class Player {
 
     public void setCurrentMonster(Monster monster) {
         this.currentMonster = monster;
+    }
+
+    public void setIndextMonster(int indexMonster) {
+        this.indexMonster = indexMonster;
+    }
+
+    public int getIndexMonster() {
+        return indexMonster;
+    }
+
+    public boolean isAllMonsterDied() {
+        int i = 0;
+        boolean allDeath = true;
+        for (i = 0; i < 6; i++) {
+            if (listOfMonster.get(i).getCurrentStats().getHealthPoint() > 0) {
+                allDeath = false;
+                break;
+            }
+        }
+        return allDeath;
     }
 
 }

@@ -44,10 +44,13 @@ public class Display {
 
     public static void showAvailableMove(Monster monster) {
         System.out.println("----- Moves of " + monster.getName() + " -----");
+        int id = 1;
         for (Move move : monster.getMoves()) {
-            System.out.println("id move: " + move.getId());
+            System.out.println("No. " + id);
             System.out.println("move name: " + move.getName());
+            System.out.println("move ammunition: " + move.getAmmunition());
             System.out.println(" ");
+            id++;
         }
     }
 
@@ -58,7 +61,7 @@ public class Display {
             System.out.printf("No. %d\n", i);
             System.out.println("Monster ID: " + monster.getId());
             System.out.println("Monster name: " + monster.getName());
-            System.out.printf("Monster remaining HP: %.1f/%.1f\n", monster.getBaseStats().getHealthPoint(),
+            System.out.printf("Monster remaining HP: %.1f/%.1f\n", monster.getCurrentStats().getHealthPoint(),
                     monster.getBaseStats().getInitialHealthPoint());
             System.out.println(" ");
             i++;

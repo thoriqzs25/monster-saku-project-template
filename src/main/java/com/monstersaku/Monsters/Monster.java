@@ -57,6 +57,22 @@ public class Monster {
         this.statusCondition = statusCondition;
     }
 
+    public Monster(Monster monster) {
+        this.copyMonster(monster);
+    }
+
+    public void copyMonster(Monster monster) {
+        setId(monster.getId());
+        setName(monster.getName());
+        setElementTypes(monster.getElementTypes());
+        setBaseStats(monster.getBaseStats());
+        this.currentStats = new Stats(monster.getCurrentStats());
+        List<Move> mv = new ArrayList<Move>();
+        mv = monster.getMoves();
+        setMoves(mv);
+        setStatusCondition(monster.getStatusCondition());
+    }
+
     // All Getter Method
     public int getId() {
         return this.id;
@@ -87,12 +103,32 @@ public class Monster {
     }
 
     // All Setter Method
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setElementTypes(List<ElementType> elementTypes) {
+        this.elementTypes = elementTypes;
+    }
+
+    public void setBaseStats(Stats baseStats) {
+        this.baseStats = baseStats;
+    }
+
     public void setCurrentStats(Stats currentStats) {
         this.currentStats = currentStats;
     }
 
     public void setMoves(List<Move> moves) {
         this.moves = moves;
+    }
+
+    public void setStatusCondition(String statusCondition) {
+        this.statusCondition = statusCondition;
     }
 
     public void outputMonster() {
@@ -113,28 +149,51 @@ public class Monster {
 
     // Use monster to play
     public void play(Scanner scan, Player player) {
-        // Array of id's of the owned move by the current monster
-        List<Integer> listId = new ArrayList<Integer>();
-        for (Move m : moves) {
-            listId.add(m.getId());
-        }
-
-        // Validate if move id is available
+        int totalMove = moves.size();
         int cmd = -999;
-        while (!listId.contains(cmd)) {
+        int ammunition = 1;
+        System.out.printf("Pick a move : ");
+        cmd = scan.nextInt();
+        if (cmd >= 1 && cmd <= totalMove) {
+            ammunition = moves.get(cmd - 1).getAmmunition();
+        }
+        while (cmd < 1 || cmd > totalMove || ammunition < 1) {
+            if (ammunition < 1) {
+                System.out.println("Move ammunition sudah habis");
+            } else if (cmd < 1 || cmd > totalMove) {
+                System.out.println("Input not valid!");
+            }
             System.out.printf("Pick a move : ");
             cmd = scan.nextInt();
-            for (int i = 0; i < moves.size(); i++) {
-                if (moves.get(i).getId() == cmd) {
-                    System.out.printf("User picked %s\n", moves.get(i).getName());
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        System.out.println("System failed to sleep");
-                    }
-                    player.setCurrentMove(moves.get(i));
-                }
+            if (cmd >= 1 && cmd <= totalMove) {
+                ammunition = moves.get(cmd - 1).getAmmunition();
             }
         }
+        cmd--;
+        System.out.printf("User picked %s\n", moves.get(cmd).getName());
+        player.setCurrentMove(moves.get(cmd));
+        // Array of id's of the owned move by the current monster
+        // List<Integer> listId = new ArrayList<Integer>();
+        // for (Move m : moves) {
+        // listId.add(m.getId());
+        // }
+
+        // Validate if move id is available
+
+        // while (!listId.contains(cmd)) {
+        // System.out.printf("Pick a move : ");
+        // cmd = scan.nextInt();
+        // for (int i = 0; i < moves.size(); i++) {
+        // if (moves.get(i).getId() == cmd) {
+        // System.out.printf("User picked %s\n", moves.get(i).getName());
+        // try {
+        // Thread.sleep(2000);
+        // } catch (InterruptedException e) {
+        // System.out.println("System failed to sleep");
+        // }
+        // player.setCurrentMove(moves.get(i));
+        // }
+        // }
+        // }
     }
 }

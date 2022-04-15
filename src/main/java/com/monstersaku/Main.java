@@ -28,24 +28,26 @@ public class Main {
         FindEffectivity.setFileName(CSV_FILE_PATHS.get(2));
     }
 
+    static Scanner scan = new Scanner(System.in);
+
     public static void main(String[] args) {
+
         // CSV files configuration setup
-        Scanner scan = new Scanner(System.in);
+
         readConfig();
 
         // Creating necessary objects
+        List<Move> movePool = CreateObjectMovePool.create();
         List<Player> playerList = new ArrayList<Player>();
         List<Monster> monsterPool = CreateObjectMonsterPool.create();
-        List<Move> movePool = CreateObjectMovePool.create();
         Display.loading(10);
 
         // Retrieving input type String from user
-        String cmd = new String();
+        String cmd;
         while (true) {
             Display.showMenuAwal();
             cmd = scan.next();
             Display.cls(); // Clear screen
-
             // Identifying user input
             switch (cmd) {
                 case "1":
@@ -55,7 +57,7 @@ public class Main {
                         Player player = new Player(new String(scan.next()));
 
                         // Give all player 6 monsters each and show their first monster to use
-                        AddListMonster.AddMonsters(player, monsterPool);
+                        AddListMonster.AddMonsters(player, monsterPool, movePool);
                         System.out.printf("Registered first monster to use -> %s\n\n",
                                 player.getCurrentMonster().getName());
                         playerList.add(player);
@@ -75,6 +77,7 @@ public class Main {
                 default:
                     break;
             }
+
         }
 
         /*
